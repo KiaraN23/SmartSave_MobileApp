@@ -1,6 +1,0 @@
-@SmartSaveApp_HostAddress = http://localhost:5046
-
-GET {{SmartSaveApp_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
