@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp", "SmartSaveApp\SmartSaveApp.csproj", "{5BB130EB-0CA2-4398-87E4-3FF7F150E32E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Core", "SmartSaveApp.Core\SmartSaveApp.Core.csproj", "{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Application", "SmartSaveApp.Application\SmartSaveApp.Application.csproj", "{29E52FFA-82E9-49D5-9BA7-A52C31BDDDFE}"
@@ -15,16 +13,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.API", "SmartSa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Tests", "SmartSaveApp.Tests\SmartSaveApp.Tests.csproj", "{AFF65B74-CE60-424C-8117-DC0AF55AA686}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{F14EE650-78C6-4CCF-A62F-56DBC97A222A}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5BB130EB-0CA2-4398-87E4-3FF7F150E32E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BB130EB-0CA2-4398-87E4-3FF7F150E32E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BB130EB-0CA2-4398-87E4-3FF7F150E32E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BB130EB-0CA2-4398-87E4-3FF7F150E32E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Release|Any CPU.ActiveCfg = Release|Any CPU
