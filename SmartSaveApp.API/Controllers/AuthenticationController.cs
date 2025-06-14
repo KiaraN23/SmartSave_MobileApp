@@ -2,7 +2,7 @@
 
 namespace SmartSaveApp.API.Controllers
 {
-    public class AuthController : Controller
+    public class AuthenticationController : Controller
     {
         public IActionResult Index()
         {

@@ -263,12 +263,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartSaveApp.Core\SmartSaveApp.Core.csproj">
-      <Project>{4cfdb11c-c7cb-4375-a9fb-e3dd1e1ea022}</Project>
-      <Name>SmartSaveApp.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

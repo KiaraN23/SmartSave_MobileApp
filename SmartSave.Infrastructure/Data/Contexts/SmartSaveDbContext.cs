@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SmartSaveApp.Core.Entities;
+using SmartSave.Core.Entities;
 
 namespace SmartSaveApp.Infrastructure.Data
 {
     public class SmartSaveDbContext : DbContext
     {
-        public SmartSaveDbContext(DbContextOptions<SmartSaveDbContext> options)
-        : base(options)
-        {
-        }
+        public SmartSaveDbContext(DbContextOptions<SmartSaveDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
 
