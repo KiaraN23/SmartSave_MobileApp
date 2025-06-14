@@ -1,4 +1,4 @@
-﻿using SmartSave.Application.Interfaces.Repositories;
+﻿using SmartSave.Core.Interfaces.Repositories;
 
 namespace SmartSave.Infrastructure.Data.Repositories
 {
