@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartSave.Application.Interfaces.Repositories;
+using SmartSave.Application.Services;
+using SmartSave.Core.Interfaces.Repositories;
 using SmartSave.Infrastructure.Data.Repositories;
 using SmartSaveApp.Infrastructure.Data;
 
@@ -13,6 +14,7 @@ namespace SmartSave.Infrastructure.Extensions
         {
             AddDbConfiguration(services, configuration);
             AddRepositories(services);
+            AddApplicationServices(services);
         }
 
         #region "Private methods"
@@ -20,14 +22,19 @@ namespace SmartSave.Infrastructure.Extensions
         {
             services.AddDbContext<SmartSaveDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("WilmeConnection"),
+                options.UseSqlServer(configuration.GetConnectionString("KiaraConnection"),
                     m => m.MigrationsAssembly(typeof(SmartSaveDbContext).Assembly.FullName));
             });
         }
 
         private static void AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+        }
+
+        private static void AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddScoped<AuthenticationService>();
         }
         #endregion
     }
