@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartSaveApp.Application\SmartSaveApp.Application.csproj" />
-    <ProjectReference Include="..\SmartSaveApp.Core\SmartSaveApp.Core.csproj" />
+    <ProjectReference Include="..\SmartSave.Application\SmartSave.Application.csproj" />
+    <ProjectReference Include="..\SmartSave.Core\SmartSave.Core.csproj" />
+    <ProjectReference Include="..\SmartSave.Infrastructure\SmartSave.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Core", "SmartSaveApp.Core\SmartSaveApp.Core.csproj", "{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSaveApp.API", "SmartSaveApp.API\SmartSaveApp.API.csproj", "{8A87981F-AEE9-4F17-861D-5AAC3A95021E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Application", "SmartSaveApp.Application\SmartSaveApp.Application.csproj", "{29E52FFA-82E9-49D5-9BA7-A52C31BDDDFE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Infrastructure", "SmartSaveApp.Infrastructure\SmartSaveApp.Infrastructure.csproj", "{C2346E9C-C3A8-4ADD-A055-96392058A43A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.API", "SmartSaveApp.API\SmartSaveApp.API.csproj", "{8A87981F-AEE9-4F17-861D-5AAC3A95021E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSaveApp.Tests", "SmartSaveApp.Tests\SmartSaveApp.Tests.csproj", "{AFF65B74-CE60-424C-8117-DC0AF55AA686}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSaveApp.Tests", "SmartSaveApp.Tests\SmartSaveApp.Tests.csproj", "{AFF65B74-CE60-424C-8117-DC0AF55AA686}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{F14EE650-78C6-4CCF-A62F-56DBC97A222A}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSave.Application", "SmartSave.Application\SmartSave.Application.csproj", "{2155CEF9-BED2-4BC6-A751-5C1DE08D92CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSave.Core", "SmartSave.Core\SmartSave.Core.csproj", "{999AF24F-297F-453B-A408-0E7EF45ED764}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSave.Infrastructure", "SmartSave.Infrastructure\SmartSave.Infrastructure.csproj", "{9A8D95BC-65D7-4ADA-9AAD-3ACF92B5DCDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,18 +24,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CFDB11C-C7CB-4375-A9FB-E3DD1E1EA022}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29E52FFA-82E9-49D5-9BA7-A52C31BDDDFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29E52FFA-82E9-49D5-9BA7-A52C31BDDDFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29E52FFA-82E9-49D5-9BA7-A52C31BDDDFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29E52FFA-82E9-49D5-9BA7-A52C31BDDDFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2346E9C-C3A8-4ADD-A055-96392058A43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2346E9C-C3A8-4ADD-A055-96392058A43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2346E9C-C3A8-4ADD-A055-96392058A43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2346E9C-C3A8-4ADD-A055-96392058A43A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A87981F-AEE9-4F17-861D-5AAC3A95021E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A87981F-AEE9-4F17-861D-5AAC3A95021E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A87981F-AEE9-4F17-861D-5AAC3A95021E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,8 +32,23 @@ Global
 		{AFF65B74-CE60-424C-8117-DC0AF55AA686}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFF65B74-CE60-424C-8117-DC0AF55AA686}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFF65B74-CE60-424C-8117-DC0AF55AA686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2155CEF9-BED2-4BC6-A751-5C1DE08D92CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2155CEF9-BED2-4BC6-A751-5C1DE08D92CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2155CEF9-BED2-4BC6-A751-5C1DE08D92CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2155CEF9-BED2-4BC6-A751-5C1DE08D92CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{999AF24F-297F-453B-A408-0E7EF45ED764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999AF24F-297F-453B-A408-0E7EF45ED764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{999AF24F-297F-453B-A408-0E7EF45ED764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{999AF24F-297F-453B-A408-0E7EF45ED764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8D95BC-65D7-4ADA-9AAD-3ACF92B5DCDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8D95BC-65D7-4ADA-9AAD-3ACF92B5DCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8D95BC-65D7-4ADA-9AAD-3ACF92B5DCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8D95BC-65D7-4ADA-9AAD-3ACF92B5DCDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BD22A85-33CC-4EA3-BB7F-DD0F59904FF8}
 	EndGlobalSection
 EndGlobal
