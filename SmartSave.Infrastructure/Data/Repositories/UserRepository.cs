@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Core.Entities;
-using SmartSave.Core.Interfaces.Repositories;
 using SmartSaveApp.Infrastructure.Data;
 
 namespace SmartSave.Infrastructure.Data.Repositories
@@ -9,14 +9,9 @@ namespace SmartSave.Infrastructure.Data.Repositories
     {
         private readonly SmartSaveDbContext _context;
 
-        public UserRepository(SmartSaveDbContext context)
-        {
-            _context = context;
-        }
+        public UserRepository(SmartSaveDbContext context) => _context = context;
 
-        public async Task<User?> GetByEmailAsync(string email)
-        {
-            return await _context.Users.FirstOrDefaultAsync(e => e.Email == email);
-        }
+        public async Task<User?> GetByEmailAndPasswordAsync(string email, string password)
+            => await _context.Users.FirstOrDefaultAsync(e => e.Email == email && e.Password == password);
     }
 }
