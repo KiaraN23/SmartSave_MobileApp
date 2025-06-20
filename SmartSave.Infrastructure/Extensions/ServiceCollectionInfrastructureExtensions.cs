@@ -27,7 +27,7 @@ namespace SmartSave.Infrastructure.Extensions
 
         private static void AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
         #endregion
     }
