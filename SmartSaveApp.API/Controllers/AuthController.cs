@@ -35,11 +35,7 @@ namespace SmartSaveApp.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    status = StatusCodes.Status500InternalServerError,
-                    message = "An unexpected error occurred."
-                });
+                return InternalServerError();
             }
         }
 
@@ -66,11 +62,7 @@ namespace SmartSaveApp.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    status = StatusCodes.Status500InternalServerError,
-                    message = "An unexpected error occurred."
-                });
+                return InternalServerError();
             }
         }
     }
