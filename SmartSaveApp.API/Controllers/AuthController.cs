@@ -13,18 +13,23 @@ namespace SmartSaveApp.API.Controllers
 
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login(LoginRequestDto loginRequest)
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(new { status = 400, message = "Every field is required" });
-
                 var result = await _authService.LoginAsync(loginRequest);
-                if (result is null)
-                    return Unauthorized(new { status = 401, message = "Invalid email or password." });
+
+                if (result.HasError)
+                {
+                    return StatusCode(result.StatusCode, new
+                    {
+                        status = result.StatusCode,
+                        message = result.ErrorMessage
+                    });
+                }
 
                 return Ok(result);
             }
@@ -32,7 +37,38 @@ namespace SmartSaveApp.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new
                 {
-                    status = 500,
+                    status = StatusCodes.Status500InternalServerError,
+                    message = "An unexpected error occurred."
+                });
+            }
+        }
+
+        [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Register(RegisterRequestDto registerRequestDto)
+        {
+            try
+            {
+                var result = await _authService.RegisterAsync(registerRequestDto);
+
+                if (result.HasError)
+                {
+                    return StatusCode(result.StatusCode, new
+                    {
+                        status = result.StatusCode,
+                        message = result.ErrorMessage
+                    });
+                }
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    status = StatusCodes.Status500InternalServerError,
                     message = "An unexpected error occurred."
                 });
             }

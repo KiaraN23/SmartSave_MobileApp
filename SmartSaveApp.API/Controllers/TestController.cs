@@ -11,7 +11,7 @@ namespace SmartSaveApp.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetSecureData()
         {
-            var user = User.Identity?.Name ?? "usuario anónimo";
+            var user = User.Identity.Name;
             return Ok($"Acceso autorizado. Hola, {user}.");
         }
     }
