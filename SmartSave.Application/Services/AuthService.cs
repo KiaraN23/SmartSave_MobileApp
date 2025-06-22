@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using SmartSave.Application.DTOs;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Application.Interfaces.Services;
+using SmartSave.Core.Entities;
 
 namespace SmartSave.Application.Services
 {
@@ -21,13 +22,49 @@ namespace SmartSave.Application.Services
             _jwTokenGeneratorService = jwTokenGeneratorService;
         }
 
-        public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto request)
+        public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto)
         {
-            var user = await _userRepository.GetByEmailAndPasswordAsync(request.Email, request.Password);
-            if (user == null) return null;
+            if (String.IsNullOrEmpty(registerRequestDto.FirstName)
+                || String.IsNullOrEmpty(registerRequestDto.LastName)
+                || String.IsNullOrEmpty(registerRequestDto.Email)
+                || String.IsNullOrEmpty(registerRequestDto.Password))
+                return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
+
+            if (registerRequestDto.Password != registerRequestDto.ConfirmPassword)
+                return new RegisterResponseDto() { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Passwords must be the same." };
+
+            if (await _userRepository.IsEmailTakenAsync(registerRequestDto.Email))
+                return new RegisterResponseDto() { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "That email is already taken." };
+
+            var user = new User()
+            {
+                FirstName = registerRequestDto.FirstName,
+                LastName = registerRequestDto.LastName,
+                Email = registerRequestDto.Email,
+                Password = registerRequestDto.Password,
+            };
+            await _userRepository.RegisterAsync(user);
+
+            return new RegisterResponseDto { };
+        }
+
+        public async Task<LoginResponseDto> LoginAsync(LoginRequestDto req)
+        {
+            if (String.IsNullOrEmpty(req.Email) || String.IsNullOrEmpty(req.Password))
+                return new LoginResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
+
+            var user = await _userRepository.GetByEmailAndPasswordAsync(req.Email, req.Password);
+
+            if (user is null)
+                return new LoginResponseDto { HasError = true, StatusCode = StatusCodes.Status401Unauthorized, ErrorMessage = "Invalid credentials" };
 
             var token = _jwTokenGeneratorService.GenerateToken(user.FirstName, user.Email);
-            return new LoginResponseDto { FirstName = user.FirstName, Email = user.Email, Token = token };
+            return new LoginResponseDto
+            {
+                FirstName = user.FirstName,
+                Email = user.Email,
+                Token = token,
+            };
         }
     }
 }
