@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using SmartSave.Application.DTOs;
+using SmartSave.Application.Helper;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Application.Interfaces.Services;
 using SmartSave.Core.Entities;
@@ -24,11 +25,17 @@ namespace SmartSave.Application.Services
 
         public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto)
         {
-            if (String.IsNullOrEmpty(registerRequestDto.FirstName)
-                || String.IsNullOrEmpty(registerRequestDto.LastName)
-                || String.IsNullOrEmpty(registerRequestDto.Email)
-                || String.IsNullOrEmpty(registerRequestDto.Password))
+            if (string.IsNullOrEmpty(registerRequestDto.FirstName)
+                || string.IsNullOrEmpty(registerRequestDto.LastName)
+                || string.IsNullOrEmpty(registerRequestDto.Email)
+                || string.IsNullOrEmpty(registerRequestDto.Password))
                 return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
+
+            if (!ValidatorHelper.IsValidEmail(registerRequestDto.Email))
+                return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Enter a valid email." };
+
+            if (!ValidatorHelper.IsStrongPassword(registerRequestDto.Password))
+                return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Password must be at least 8 characters and contain uppercase, lowercase and number." };
 
             if (registerRequestDto.Password != registerRequestDto.ConfirmPassword)
                 return new RegisterResponseDto() { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Passwords must be the same." };
@@ -50,7 +57,7 @@ namespace SmartSave.Application.Services
 
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto req)
         {
-            if (String.IsNullOrEmpty(req.Email) || String.IsNullOrEmpty(req.Password))
+            if (string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
                 return new LoginResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
 
             var user = await _userRepository.GetByEmailAndPasswordAsync(req.Email, req.Password);
