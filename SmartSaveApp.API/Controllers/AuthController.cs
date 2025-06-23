@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartSave.Application.DTOs;
 using SmartSave.Application.Interfaces.Services;
+using System.Security.Claims;
 
 namespace SmartSaveApp.API.Controllers
 {
@@ -59,6 +61,36 @@ namespace SmartSaveApp.API.Controllers
                 }
 
                 return Ok();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpPost("resetPassword")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequestDto resetPasswordRequestDto)
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                var result = await _authService.ResetPasswordAsync(userId, resetPasswordRequestDto);
+
+                if(result.HasError)
+                {
+                    return StatusCode(result.StatusCode, new
+                    {
+                        status = result.StatusCode,
+                        message = result.ErrorMessage
+                    });
+                }
+
+                return Ok(new { message = "Password reseted correctly" });
             }
             catch (Exception)
             {

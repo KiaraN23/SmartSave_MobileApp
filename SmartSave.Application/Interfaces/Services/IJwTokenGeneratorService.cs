@@ -2,6 +2,6 @@
 {
     public interface IJwTokenGeneratorService
     {
-        string GenerateToken(string firstName, string email);
+        string GenerateToken(string userId, string firstName, string email);
     }
 }
