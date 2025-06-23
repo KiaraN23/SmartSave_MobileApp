@@ -23,32 +23,32 @@ namespace SmartSave.Application.Services
             _jwTokenGeneratorService = jwTokenGeneratorService;
         }
 
-        public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto registerRequestDto)
+        public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto req)
         {
-            if (string.IsNullOrEmpty(registerRequestDto.FirstName)
-                || string.IsNullOrEmpty(registerRequestDto.LastName)
-                || string.IsNullOrEmpty(registerRequestDto.Email)
-                || string.IsNullOrEmpty(registerRequestDto.Password))
+            if (string.IsNullOrEmpty(req.FirstName)
+                || string.IsNullOrEmpty(req.LastName)
+                || string.IsNullOrEmpty(req.Email)
+                || string.IsNullOrEmpty(req.Password))
                 return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
 
-            if (!ValidatorHelper.IsValidEmail(registerRequestDto.Email))
+            if (!ValidatorHelper.IsValidEmail(req.Email))
                 return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Enter a valid email." };
 
-            if (!ValidatorHelper.IsStrongPassword(registerRequestDto.Password))
+            if (!ValidatorHelper.IsStrongPassword(req.Password))
                 return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Password must be at least 8 characters and contain uppercase, lowercase and number." };
 
-            if (registerRequestDto.Password != registerRequestDto.ConfirmPassword)
+            if (req.Password != req.ConfirmPassword)
                 return new RegisterResponseDto() { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Passwords must be the same." };
 
-            if (await _userRepository.IsEmailTakenAsync(registerRequestDto.Email))
+            if (await _userRepository.IsEmailTakenAsync(req.Email))
                 return new RegisterResponseDto() { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "That email is already taken." };
 
             var user = new User()
             {
-                FirstName = registerRequestDto.FirstName,
-                LastName = registerRequestDto.LastName,
-                Email = registerRequestDto.Email,
-                Password = registerRequestDto.Password,
+                FirstName = req.FirstName,
+                LastName = req.LastName,
+                Email = req.Email,
+                Password = req.Password,
             };
             await _userRepository.RegisterAsync(user);
 
@@ -65,13 +65,36 @@ namespace SmartSave.Application.Services
             if (user is null)
                 return new LoginResponseDto { HasError = true, StatusCode = StatusCodes.Status401Unauthorized, ErrorMessage = "Invalid credentials" };
 
-            var token = _jwTokenGeneratorService.GenerateToken(user.FirstName, user.Email);
+            var token = _jwTokenGeneratorService.GenerateToken(user.Id.ToString(), user.FirstName, user.Email);
             return new LoginResponseDto
             {
                 FirstName = user.FirstName,
                 Email = user.Email,
                 Token = token,
             };
+        }
+
+        public async Task<ResetPasswordResponseDto> ResetPasswordAsync(string userId, ResetPasswordRequestDto req)
+        {
+            if (string.IsNullOrEmpty(req.CurrentPassword) || string.IsNullOrEmpty(req.NewPassword)
+                || string.IsNullOrEmpty(req.ConfirmNewPassword))
+                return new ResetPasswordResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
+
+            if (req.CurrentPassword == req.NewPassword)
+                return new ResetPasswordResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "New password must be different" };
+
+            if (!ValidatorHelper.IsStrongPassword(req.NewPassword))
+                return new ResetPasswordResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Password must be at least 8 characters and contain uppercase, lowercase and number." };
+
+            if (req.NewPassword != req.ConfirmNewPassword)
+                return new ResetPasswordResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "New password and confirm password must be the same." };
+
+            var result = await _userRepository.ResetPassword(userId, req.CurrentPassword, req.NewPassword);
+
+            if (!result)
+                return new ResetPasswordResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "That's not the current password." };
+
+            return new ResetPasswordResponseDto { };
         }
     }
 }

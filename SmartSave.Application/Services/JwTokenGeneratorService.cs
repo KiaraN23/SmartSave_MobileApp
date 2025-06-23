@@ -14,14 +14,15 @@ namespace SmartSave.Application.Services
         public JwTokenGeneratorService(IConfiguration configuration)
             => _configuration = configuration;
 
-        public string GenerateToken(string firstName, string email)
+        public string GenerateToken(string userId, string firstName, string email)
         {
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!);
 
             var claims = new[]
             {
             new Claim(ClaimTypes.Name, firstName),
-            new Claim(ClaimTypes.Email, email)
+            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.NameIdentifier, userId)
             };
 
             var credentials = new SigningCredentials(

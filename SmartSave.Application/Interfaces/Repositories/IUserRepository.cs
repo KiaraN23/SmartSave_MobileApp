@@ -7,5 +7,6 @@ namespace SmartSave.Application.Interfaces.Repositories
         Task<User?> GetByEmailAndPasswordAsync(string email, string password);
         Task<bool> IsEmailTakenAsync(string email);
         Task RegisterAsync(User user);
+        Task<bool> ResetPassword(string userId, string currentPassword, string newPassword);
     }
 }

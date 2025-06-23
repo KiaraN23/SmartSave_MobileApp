@@ -32,5 +32,17 @@ namespace SmartSave.Infrastructure.Data.Repositories
 
         public async Task<bool> IsEmailTakenAsync(string email)
             => await _context.Users.AnyAsync(e => e.Email == email);
+
+        public async Task<bool> ResetPassword(string userId, string currentPassword, string newPassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            if (!PasswordHasher.Verify(currentPassword, user.Password)) return false;
+
+            user.Password = PasswordHasher.Hash(newPassword);
+            _context.Entry(user).CurrentValues.SetValues(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
