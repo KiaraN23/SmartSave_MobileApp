@@ -18,16 +18,25 @@ namespace SmartSave.Infrastructure.Extensions
         #region "Private methods"
         private static void AddDbConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<SmartSaveDbContext>(options =>
+            if (configuration.GetValue<bool>("UseInMemory"))
             {
-                options.UseSqlServer(configuration.GetConnectionString("WilmeConnection"),
-                    m => m.MigrationsAssembly(typeof(SmartSaveDbContext).Assembly.FullName));
-            });
+                services.AddDbContext<SmartSaveDbContext>(options => options.UseInMemoryDatabase("AppDb"));
+            }
+            else
+            {
+                services.AddDbContext<SmartSaveDbContext>(options =>
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("WilmeConnection"),
+                        m => m.MigrationsAssembly(typeof(SmartSaveDbContext).Assembly.FullName));
+                });
+            }
+            
         }
 
         private static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
         }
         #endregion
     }
