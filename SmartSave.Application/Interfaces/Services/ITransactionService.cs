@@ -13,6 +13,7 @@ namespace SmartSave.Application.Interfaces.Services
         Task<GetTransactionDto?> GetByIdAsync(int id);
         Task<IEnumerable<GetTransactionDto>> GetAllAsync(int userId);
         Task<BasicResponse> DeleteAsync(int id, int userId);
+        Task<BasicResponse> UpdateAsync(int id, CreateTransactionDto dto);
 
     }
 }

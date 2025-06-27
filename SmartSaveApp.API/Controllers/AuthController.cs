@@ -18,7 +18,7 @@ namespace SmartSaveApp.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Login(LoginRequestDto loginRequest)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace SmartSaveApp.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Register(RegisterRequestDto registerRequestDto)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace SmartSaveApp.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ResetPassword(ResetPasswordRequestDto resetPasswordRequestDto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDto resetPasswordRequestDto)
         {
             try
             {

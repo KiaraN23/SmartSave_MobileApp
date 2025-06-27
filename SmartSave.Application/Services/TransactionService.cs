@@ -102,5 +102,65 @@ namespace SmartSave.Application.Services
             await _transactionRepository.DeleteAsync(id);
             return new BasicResponse();
         }
+
+        public async Task<BasicResponse> UpdateAsync(int id, CreateTransactionDto dto)
+        {
+            var existingTransaction = await _transactionRepository.GetByIdAsync(id);
+
+            if (existingTransaction == null || existingTransaction.UserId != dto.UserId)
+            {
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status404NotFound,
+                    ErrorMessage = "Transaction not found or does not belong to the user."
+                };
+            }
+
+            if (dto.Amount <= 0)
+            {
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "Amount must be greater than 0."
+                };
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Description) || string.IsNullOrWhiteSpace(dto.Date.ToString()))
+            {
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "Description or date are required."
+                };
+            }
+
+            if (!Enum.IsDefined(typeof(TransactionType), dto.Type))
+            {
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "Invalid transaction type. Must be either 'Income (0)' or 'Expense (1)'."
+                };
+            }
+
+            var updatedTransaction = new Transaction
+            {
+                Id = id,
+                UserId = dto.UserId,
+                Amount = dto.Amount,
+                Description = dto.Description,
+                Date = dto.Date,
+                Type = dto.Type
+            };
+
+            await _transactionRepository.UpdateAsync(id, updatedTransaction);
+
+            return new BasicResponse();
+        }
+
     }
 }
