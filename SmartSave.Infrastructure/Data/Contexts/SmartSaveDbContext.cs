@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartSave.Core.Entities;
 
-namespace SmartSaveApp.Infrastructure.Data
+namespace SmartSave.Infrastructure.Data.Contexts
 {
     public class SmartSaveDbContext : DbContext
     {
@@ -49,6 +49,9 @@ namespace SmartSaveApp.Infrastructure.Data
 
             modelBuilder.Entity<Transaction>().Property(t => t.Amount)
                 .IsRequired();
+
+            modelBuilder.Entity<Transaction>().Property(t => t.Amount)
+                .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Transaction>().Property(t => t.Description)
                 .IsRequired();

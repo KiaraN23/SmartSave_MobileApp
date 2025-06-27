@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartSave.Application.Interfaces.Repositories;
+using SmartSave.Infrastructure.Data.Contexts;
 using SmartSave.Infrastructure.Data.Repositories;
-using SmartSaveApp.Infrastructure.Data;
 
 namespace SmartSave.Infrastructure.Extensions
 {

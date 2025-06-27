@@ -77,7 +77,11 @@ namespace SmartSaveApp.API.Controllers
                 var transaction = await _transactionService.GetByIdAsync(id);
 
                 if (transaction is null)
-                    return NotFound(new { message = "Transaction not found" });
+                    return StatusCode(404, new
+                    {
+                        status = 404,
+                        message = "Transaction not found"
+                    });
 
                 return Ok(transaction);
             }

@@ -1,13 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Core.Entities;
-using SmartSaveApp.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using SmartSave.Infrastructure.Data.Contexts;
 
 namespace SmartSave.Infrastructure.Data.Repositories
 {

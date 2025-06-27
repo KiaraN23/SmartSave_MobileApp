@@ -3,11 +3,7 @@ using SmartSave.Application.DTOs;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Application.Interfaces.Services;
 using SmartSave.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SmartSave.Core.Enums;
 
 namespace SmartSave.Application.Services
 {
@@ -30,12 +26,20 @@ namespace SmartSave.Application.Services
                     ErrorMessage = "Amount must be greater than 0."
                 };
 
-            if (string.IsNullOrWhiteSpace(dto.Description))
+            if (string.IsNullOrWhiteSpace(dto.Description) || string.IsNullOrWhiteSpace(dto.Date.ToString()))
                 return new BasicResponse
                 {
                     HasError = true,
                     StatusCode = StatusCodes.Status400BadRequest,
-                    ErrorMessage = "Description is required."
+                    ErrorMessage = "Description or date are required."
+                };
+
+            if(!Enum.IsDefined(typeof(TransactionType), dto.Type))
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "Invalid transaction type. Must be either 'Income (0)' or 'Expense (1)'."
                 };
 
             var transaction = new Transaction
