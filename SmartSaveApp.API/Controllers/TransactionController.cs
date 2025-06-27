@@ -119,5 +119,37 @@ namespace SmartSaveApp.API.Controllers
                 return InternalServerError();
             }
         }
+
+        [HttpPut("edit/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Update(int id, [FromBody] CreateTransactionDto dto)
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                dto.UserId = userId;
+
+                var result = await _transactionService.UpdateAsync(id, dto);
+
+                if (result.HasError)
+                {
+                    return StatusCode(result.StatusCode, new
+                    {
+                        status = result.StatusCode,
+                        message = result.ErrorMessage
+                    });
+                }
+
+                return Ok(new { message = "Transaction updated successfully" });
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }

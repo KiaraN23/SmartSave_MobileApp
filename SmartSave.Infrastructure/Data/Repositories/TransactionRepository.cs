@@ -39,5 +39,19 @@ namespace SmartSave.Infrastructure.Data.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateAsync(int id, Transaction updatedTransaction)
+        {
+            var transactionToUpdate = await _context.Transactions.FindAsync(id);
+            
+            if (transactionToUpdate is not null)
+            {
+                transactionToUpdate.Amount = updatedTransaction.Amount;
+                transactionToUpdate.Description = updatedTransaction.Description;
+                transactionToUpdate.Date = updatedTransaction.Date;
+                transactionToUpdate.Type = updatedTransaction.Type;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

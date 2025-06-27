@@ -14,5 +14,6 @@ namespace SmartSave.Application.Interfaces.Repositories
         Task<Transaction?> GetByIdAsync(int id);
         Task AddAsync(Transaction transaction);
         Task DeleteAsync(int id);
+        Task UpdateAsync(int id, Transaction transaction);
     }
 }
