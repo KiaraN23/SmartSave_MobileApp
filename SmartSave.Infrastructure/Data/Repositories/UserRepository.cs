@@ -2,7 +2,7 @@
 using SmartSave.Application.Helper;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Core.Entities;
-using SmartSaveApp.Infrastructure.Data;
+using SmartSave.Infrastructure.Data.Contexts;
 
 namespace SmartSave.Infrastructure.Data.Repositories
 {
