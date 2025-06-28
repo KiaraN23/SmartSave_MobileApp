@@ -97,6 +97,30 @@ namespace SmartSave.Application.Services
                 };
             }
 
+            if (dto.ObjectiveAmount <= 0)
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "El monto objetivo debe ser mayor que cero."
+                };
+
+            if (dto.CurrentAmount < 0)
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "El monto actual no puede ser negativo."
+                };
+
+            if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Deadline.ToString()))
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "El nombre o la fecha son requeridos."
+                };
+
             goal.UserId = dto.UserId;
             goal.Name = dto.Name;
             goal.ObjectiveAmount = dto.ObjectiveAmount;
