@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json;
 
 namespace SmartSaveApp.API.Extensions
 {
@@ -24,6 +25,21 @@ namespace SmartSaveApp.API.Extensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnChallenge = c =>
+                    {
+                        c.HandleResponse();
+                        c.Response.StatusCode = 401;
+                        c.Response.ContentType = "application/json";
+                        return c.Response.WriteAsync(JsonSerializer.Serialize(new
+                        {
+                            status = 401,
+                            message = "Unauthorized"
+                        }));
+                    }
                 };
             });
         }

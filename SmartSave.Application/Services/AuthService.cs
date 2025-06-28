@@ -25,10 +25,10 @@ namespace SmartSave.Application.Services
 
         public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto req)
         {
-            if (string.IsNullOrEmpty(req.FirstName)
-                || string.IsNullOrEmpty(req.LastName)
-                || string.IsNullOrEmpty(req.Email)
-                || string.IsNullOrEmpty(req.Password))
+            if (string.IsNullOrWhiteSpace(req.FirstName)
+                || string.IsNullOrWhiteSpace(req.LastName)
+                || string.IsNullOrWhiteSpace(req.Email)
+                || string.IsNullOrWhiteSpace(req.Password))
                 return new RegisterResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
 
             if (!ValidatorHelper.IsValidEmail(req.Email))
@@ -57,7 +57,7 @@ namespace SmartSave.Application.Services
 
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto req)
         {
-            if (string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
+            if (string.IsNullOrWhiteSpace(req.Email) || string.IsNullOrWhiteSpace(req.Password))
                 return new LoginResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
 
             var user = await _userRepository.GetByEmailAndPasswordAsync(req.Email, req.Password);
@@ -76,8 +76,8 @@ namespace SmartSave.Application.Services
 
         public async Task<ResetPasswordResponseDto> ResetPasswordAsync(string userId, ResetPasswordRequestDto req)
         {
-            if (string.IsNullOrEmpty(req.CurrentPassword) || string.IsNullOrEmpty(req.NewPassword)
-                || string.IsNullOrEmpty(req.ConfirmNewPassword))
+            if (string.IsNullOrWhiteSpace(req.CurrentPassword) || string.IsNullOrWhiteSpace(req.NewPassword)
+                || string.IsNullOrWhiteSpace(req.ConfirmNewPassword))
                 return new ResetPasswordResponseDto { HasError = true, StatusCode = StatusCodes.Status400BadRequest, ErrorMessage = "Every field is required" };
 
             if (req.CurrentPassword == req.NewPassword)
