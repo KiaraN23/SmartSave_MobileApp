@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Core.Entities;
-using SmartSaveApp.Infrastructure.Data;
+using SmartSave.Infrastructure.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
