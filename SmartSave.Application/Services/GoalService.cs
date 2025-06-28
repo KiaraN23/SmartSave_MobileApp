@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using SmartSave.Application.DTOs;
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Application.Interfaces.Services;
 using SmartSave.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace SmartSave.Application.Services
 {
@@ -31,12 +24,20 @@ namespace SmartSave.Application.Services
                     ErrorMessage = "El monto objetivo debe ser mayor que cero."
                 };
 
-            if (string.IsNullOrWhiteSpace(dto.Name))
+            if (dto.CurrentAmount < 0)
                 return new BasicResponse
                 {
                     HasError = true,
                     StatusCode = StatusCodes.Status400BadRequest,
-                    ErrorMessage = "El nombre es requerido."
+                    ErrorMessage = "El monto actual no puede ser negativo."
+                };
+
+            if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Deadline.ToString()))
+                return new BasicResponse
+                {
+                    HasError = true,
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = "El nombre o la fecha son requeridos."
                 };
 
             var goal = new Goal
