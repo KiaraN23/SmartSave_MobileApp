@@ -21,7 +21,7 @@ namespace SmartSave.Infrastructure.Extensions
             if (configuration.GetValue<bool>("UseInMemory"))
             {
                 services.AddDbContext<SmartSaveDbContext>(options => options.UseInMemoryDatabase("AppDb"));
-            }
+            }     
             else
             {
                 services.AddDbContext<SmartSaveDbContext>(options =>
@@ -30,12 +30,12 @@ namespace SmartSave.Infrastructure.Extensions
                         m => m.MigrationsAssembly(typeof(SmartSaveDbContext).Assembly.FullName));
                 });
             }
-            
         }
 
         private static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGoalRepository, GoalRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
         }
         #endregion

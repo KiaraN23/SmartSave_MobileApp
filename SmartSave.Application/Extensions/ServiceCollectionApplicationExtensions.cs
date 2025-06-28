@@ -10,6 +10,7 @@ namespace SmartSave.Application.Extensions
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwTokenGeneratorService, JwTokenGeneratorService>();
+            services.AddScoped<IGoalService, GoalService>();
             services.AddScoped<ITransactionService, TransactionService>();
         }
     }
