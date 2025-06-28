@@ -77,7 +77,11 @@ namespace SmartSaveApp.API.Controllers
                 var goal = await _goalService.GetByIdAsync(id);
 
                 if (goal is null)
-                    return NotFound(new { message = "Meta no encontrada" });
+                    return StatusCode(404, new
+                    {
+                        status = 404,
+                        message = "Meta no encontrada"
+                    });
 
                 return Ok(goal);
             }
