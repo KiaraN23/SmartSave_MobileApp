@@ -8,10 +8,13 @@ namespace SmartSave.Application.Extensions
     {
         public static void AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IJwTokenGeneratorService, JwTokenGeneratorService>();
-            services.AddScoped<IGoalService, GoalService>();
-            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IJwTokenGeneratorService, JwTokenGeneratorService>();
+            services.AddTransient<IGoalService, GoalService>();
+            services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<HttpClient>();
+            services.AddTransient<IOpenRouterApiService, OpenRouterApiService>();
+            services.AddTransient<IAISuggestionService, AISuggestionService>();
         }
     }
 }
