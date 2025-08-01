@@ -37,6 +37,7 @@ namespace SmartSave.Infrastructure.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGoalRepository, GoalRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IAIServicesRepository, AIServicesRepository>();
         }
         #endregion
     }

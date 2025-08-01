@@ -10,6 +10,8 @@ namespace SmartSave.Infrastructure.Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Suggestion> Suggestions { get; set; }
+        public DbSet<Prediction> Predictions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,19 +19,23 @@ namespace SmartSave.Infrastructure.Data.Contexts
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Goal>().ToTable("Goals");
             modelBuilder.Entity<Transaction>().ToTable("Transactions");
+            modelBuilder.Entity<Suggestion>().ToTable("Suggestions");
+            modelBuilder.Entity<Prediction>().ToTable("Predictions");
             #endregion
 
             #region "PKs"
             modelBuilder.Entity<User>().HasKey(x => x.Id);
             modelBuilder.Entity<Goal>().HasKey(g => g.Id);
             modelBuilder.Entity<Transaction>().HasKey(t => t.Id);
+            modelBuilder.Entity<Suggestion>().HasKey(t => t.Id);
+            modelBuilder.Entity<Prediction>().HasKey(p => p.Id);
             #endregion
 
             #region "Relationships"
             #endregion
 
             #region "Property Configurations"
-            
+
             #region "User"
             modelBuilder.Entity<User>().Property(user => user.FirstName)
                 .IsRequired();
@@ -78,6 +84,28 @@ namespace SmartSave.Infrastructure.Data.Contexts
                 .IsRequired();
 
             modelBuilder.Entity<Transaction>().Property(t => t.Type)
+                .IsRequired();
+            #endregion
+
+            #region "Suggestion"
+            modelBuilder.Entity<Suggestion>().Property(t => t.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Suggestion>().Property(t => t.SuggestionMessage)
+                .IsRequired();
+
+            modelBuilder.Entity<Suggestion>().Property(t => t.CreatedAt)
+                .IsRequired();
+            #endregion
+
+            #region "Prediction"
+            modelBuilder.Entity<Prediction>().Property(t => t.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Prediction>().Property(t => t.PredictionMessage)
+                .IsRequired();
+
+            modelBuilder.Entity<Prediction>().Property(t => t.CreatedAt)
                 .IsRequired();
             #endregion
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartSave.Infrastructure.Data.Contexts;
 
@@ -11,9 +12,11 @@ using SmartSave.Infrastructure.Data.Contexts;
 namespace SmartSave.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartSaveDbContext))]
-    partial class SmartSaveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250730125928_SuggestionTable")]
+    partial class SuggestionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,29 +54,6 @@ namespace SmartSave.Infrastructure.Migrations
                     b.ToTable("Goals", (string)null);
                 });
 
-            modelBuilder.Entity("SmartSave.Core.Entities.Prediction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PredictionMessage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Predictions", (string)null);
-                });
-
             modelBuilder.Entity("SmartSave.Core.Entities.Suggestion", b =>
                 {
                     b.Property<int>("Id")
@@ -81,9 +61,6 @@ namespace SmartSave.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("SuggestionMessage")
                         .IsRequired()

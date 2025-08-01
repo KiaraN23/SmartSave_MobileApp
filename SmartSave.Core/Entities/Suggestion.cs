@@ -1,0 +1,10 @@
+﻿using SmartSave.Core.Common;
+
+namespace SmartSave.Core.Entities
+{
+    public class Suggestion : TimestampedEntity
+    {
+        public int UserId { get; set; }
+        public string SuggestionMessage { get; set; }
+    }
+}
