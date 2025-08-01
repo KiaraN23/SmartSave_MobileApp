@@ -52,6 +52,8 @@ namespace SmartSaveApp.API.Controllers
         }
 
         [HttpGet("prediction")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetSuggestionDto))]
         public async Task<IActionResult> GetPrediction()
         {
             try
