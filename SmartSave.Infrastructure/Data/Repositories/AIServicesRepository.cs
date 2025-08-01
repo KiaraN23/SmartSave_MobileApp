@@ -4,11 +4,11 @@ using SmartSave.Infrastructure.Data.Contexts;
 
 namespace SmartSave.Infrastructure.Data.Repositories
 {
-    public class AISuggestionRepository : IAISuggestionRepository
+    public class AIServicesRepository : IAIServicesRepository
     {
         private readonly SmartSaveDbContext _context;
 
-        public AISuggestionRepository(SmartSaveDbContext smartSaveDbContext)
+        public AIServicesRepository(SmartSaveDbContext smartSaveDbContext)
         {
             _context = smartSaveDbContext;
         }
@@ -16,6 +16,12 @@ namespace SmartSave.Infrastructure.Data.Repositories
         public async Task SaveSuggestionAsync(Suggestion suggestion)
         {
             await _context.Suggestions.AddAsync(suggestion);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SavePredictionAsync(Prediction prediction)
+        {
+            await _context.Predictions.AddAsync(prediction);
             await _context.SaveChangesAsync();
         }
     }

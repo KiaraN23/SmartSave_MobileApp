@@ -2,9 +2,9 @@
 
 namespace SmartSave.Core.Entities
 {
-    public class Suggestion : TimestampedEntity
+    public class Prediction : TimestampedEntity
     {
         public int UserId { get; set; }
-        public string SuggestionMessage { get; set; }
+        public string PredictionMessage { get; set; }
     }
 }

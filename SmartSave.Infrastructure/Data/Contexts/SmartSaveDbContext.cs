@@ -11,6 +11,7 @@ namespace SmartSave.Infrastructure.Data.Contexts
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Suggestion> Suggestions { get; set; }
+        public DbSet<Prediction> Predictions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,7 @@ namespace SmartSave.Infrastructure.Data.Contexts
             modelBuilder.Entity<Goal>().ToTable("Goals");
             modelBuilder.Entity<Transaction>().ToTable("Transactions");
             modelBuilder.Entity<Suggestion>().ToTable("Suggestions");
+            modelBuilder.Entity<Prediction>().ToTable("Predictions");
             #endregion
 
             #region "PKs"
@@ -26,6 +28,7 @@ namespace SmartSave.Infrastructure.Data.Contexts
             modelBuilder.Entity<Goal>().HasKey(g => g.Id);
             modelBuilder.Entity<Transaction>().HasKey(t => t.Id);
             modelBuilder.Entity<Suggestion>().HasKey(t => t.Id);
+            modelBuilder.Entity<Prediction>().HasKey(p => p.Id);
             #endregion
 
             #region "Relationships"
@@ -92,6 +95,17 @@ namespace SmartSave.Infrastructure.Data.Contexts
                 .IsRequired();
 
             modelBuilder.Entity<Suggestion>().Property(t => t.CreatedAt)
+                .IsRequired();
+            #endregion
+
+            #region "Prediction"
+            modelBuilder.Entity<Prediction>().Property(t => t.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Prediction>().Property(t => t.PredictionMessage)
+                .IsRequired();
+
+            modelBuilder.Entity<Prediction>().Property(t => t.CreatedAt)
                 .IsRequired();
             #endregion
 

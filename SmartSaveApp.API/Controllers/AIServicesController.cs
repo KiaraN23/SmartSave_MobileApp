@@ -11,12 +11,12 @@ namespace SmartSaveApp.API.Controllers
         private readonly IGoalService _goalService;
         private readonly ITransactionService _transactionService;
         private readonly IOpenRouterApiService _openRouterApiService;
-        private readonly IAISuggestionService _suggestionService;
+        private readonly IAIServicesService _suggestionService;
 
         public AIServicesController(IGoalService goalService,
                         ITransactionService transactionService, 
                         IOpenRouterApiService openRouterApiService,
-                        IAISuggestionService suggestionService)
+                        IAIServicesService suggestionService)
         {
             _goalService = goalService;
             _transactionService = transactionService;
@@ -36,7 +36,7 @@ namespace SmartSaveApp.API.Controllers
                 var goals = await _goalService.GetAllAsync(userId);
                 var transactions = await _transactionService.GetAllAsync(userId);
 
-                var prompt = PromptBuilder.BuildPrompt(goals, transactions);
+                var prompt = PromptBuilder.BuildSuggestionPrompt(goals, transactions);
 
                 var suggestionMessage = await _openRouterApiService.SendMessageAsync(prompt);
 
@@ -46,6 +46,32 @@ namespace SmartSaveApp.API.Controllers
 
                 return Ok(response);
             } catch (Exception e)
+            {
+                return InternalServerError(e.Message);
+            }
+        }
+
+        [HttpGet("prediction")]
+        public async Task<IActionResult> GetPrediction()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+                var goals = await _goalService.GetAllAsync(userId);
+                var transactions = await _transactionService.GetAllAsync(userId);
+
+                var prompt = PromptBuilder.BuildPredictionPrompt(goals, transactions);
+
+                var predictionMessage = await _openRouterApiService.SendMessageAsync(prompt);
+
+                var response = new GetPredictionDto { PredictionMessage = predictionMessage };
+
+                await _suggestionService.SavePredictionAsync(response, DateTime.Now, userId);
+
+                return Ok(response);
+            }
+            catch (Exception e)
             {
                 return InternalServerError(e.Message);
             }

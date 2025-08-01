@@ -2,8 +2,9 @@
 
 namespace SmartSave.Application.Interfaces.Repositories
 {
-    public interface IAISuggestionRepository
+    public interface IAIServicesRepository
     {
         public Task SaveSuggestionAsync(Suggestion suggestion);
+        public Task SavePredictionAsync(Prediction prediction);
     }
 }
