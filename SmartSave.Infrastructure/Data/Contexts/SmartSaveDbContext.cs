@@ -12,6 +12,7 @@ namespace SmartSave.Infrastructure.Data.Contexts
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Suggestion> Suggestions { get; set; }
         public DbSet<Prediction> Predictions { get; set; }
+        public DbSet<Debt> Debts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +22,7 @@ namespace SmartSave.Infrastructure.Data.Contexts
             modelBuilder.Entity<Transaction>().ToTable("Transactions");
             modelBuilder.Entity<Suggestion>().ToTable("Suggestions");
             modelBuilder.Entity<Prediction>().ToTable("Predictions");
+            modelBuilder.Entity<Debt>().ToTable("Debts");
             #endregion
 
             #region "PKs"
@@ -29,6 +31,7 @@ namespace SmartSave.Infrastructure.Data.Contexts
             modelBuilder.Entity<Transaction>().HasKey(t => t.Id);
             modelBuilder.Entity<Suggestion>().HasKey(t => t.Id);
             modelBuilder.Entity<Prediction>().HasKey(p => p.Id);
+            modelBuilder.Entity<Debt>().HasKey(p => p.Id);
             #endregion
 
             #region "Relationships"
@@ -106,6 +109,21 @@ namespace SmartSave.Infrastructure.Data.Contexts
                 .IsRequired();
 
             modelBuilder.Entity<Prediction>().Property(t => t.CreatedAt)
+                .IsRequired();
+            #endregion
+
+            #region "Debts"
+            modelBuilder.Entity<Debt>().Property(t => t.UserId)
+                .IsRequired();
+            modelBuilder.Entity<Debt>().Property(t => t.TotalAmount)
+                .IsRequired();
+            modelBuilder.Entity<Debt>().Property(t => t.AmountPaid)
+                .IsRequired();
+            modelBuilder.Entity<Debt>().Property(t => t.Deadline)
+                .IsRequired();
+            modelBuilder.Entity<Debt>().Property(t => t.AmountPaid)
+                .IsRequired();
+            modelBuilder.Entity<Debt>().Property(t => t.RemainingAmount)
                 .IsRequired();
             #endregion
 

@@ -15,6 +15,7 @@ namespace SmartSave.Application.Extensions
             services.AddTransient<HttpClient>();
             services.AddTransient<IOpenRouterApiService, OpenRouterApiService>();
             services.AddTransient<IAIServicesService, AIServicesService>();
+            services.AddTransient<IDebtService, DebtService>();
         }
     }
 }

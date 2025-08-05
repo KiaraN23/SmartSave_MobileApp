@@ -10,18 +10,21 @@ namespace SmartSaveApp.API.Controllers
     {
         private readonly IGoalService _goalService;
         private readonly ITransactionService _transactionService;
+        private readonly IDebtService _debtService;
         private readonly IOpenRouterApiService _openRouterApiService;
         private readonly IAIServicesService _suggestionService;
 
         public AIServicesController(IGoalService goalService,
                         ITransactionService transactionService, 
                         IOpenRouterApiService openRouterApiService,
-                        IAIServicesService suggestionService)
+                        IAIServicesService suggestionService,
+                        IDebtService debtService)
         {
             _goalService = goalService;
             _transactionService = transactionService;
             _openRouterApiService = openRouterApiService;
             _suggestionService = suggestionService;
+            _debtService = debtService;
         }
 
         [HttpGet("suggestion")]
@@ -35,8 +38,9 @@ namespace SmartSaveApp.API.Controllers
 
                 var goals = await _goalService.GetAllAsync(userId);
                 var transactions = await _transactionService.GetAllAsync(userId);
+                var debts = await _debtService.GetAllAsync(userId);
 
-                var prompt = PromptBuilder.BuildSuggestionPrompt(goals, transactions);
+                var prompt = PromptBuilder.BuildSuggestionPrompt(goals, transactions, debts);
 
                 var suggestionMessage = await _openRouterApiService.SendMessageAsync(prompt);
 
@@ -62,8 +66,9 @@ namespace SmartSaveApp.API.Controllers
 
                 var goals = await _goalService.GetAllAsync(userId);
                 var transactions = await _transactionService.GetAllAsync(userId);
+                var debts = await _debtService.GetAllAsync(userId);
 
-                var prompt = PromptBuilder.BuildPredictionPrompt(goals, transactions);
+                var prompt = PromptBuilder.BuildPredictionPrompt(goals, transactions, debts);
 
                 var predictionMessage = await _openRouterApiService.SendMessageAsync(prompt);
 
