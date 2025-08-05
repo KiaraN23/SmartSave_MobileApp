@@ -1,11 +1,10 @@
-﻿using SmartSave.Core.Common;
-
-namespace SmartSave.Core.Entities
+﻿namespace SmartSave.Application.DTOs
 {
-    public class Debt : BaseEntity
+    public class GetDebtDto
     {
-        public string Creditor { get; set; }          
-        public decimal TotalAmount { get; set; }     
+        public int Id { get; set; }
+        public string Creditor { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal AmountPaid { get; set; }
         public decimal RemainingAmount { get; set; }
         public string? Description { get; set; }

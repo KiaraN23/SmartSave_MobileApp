@@ -2,11 +2,6 @@
 using SmartSave.Application.Interfaces.Repositories;
 using SmartSave.Core.Entities;
 using SmartSave.Infrastructure.Data.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartSave.Infrastructure.Data.Repositories
 {
@@ -39,7 +34,6 @@ namespace SmartSave.Infrastructure.Data.Repositories
             _context.Goals.Update(goal);
             await _context.SaveChangesAsync();
         }
-
 
         public async Task<Goal?> DeleteAsync(int id)
         {
