@@ -83,5 +83,34 @@ namespace SmartSaveApp.API.Controllers
                 return InternalServerError(e.Message);
             }
         }
+
+        [HttpGet("suggestion/all")]
+        public async Task<IActionResult> GetAllSuggestions()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var suggestions = await _suggestionService.GetAllSuggestionsAsync(userId);
+                return Ok(suggestions);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e.Message);
+            }
+        }
+        [HttpGet("prediction/all")]
+        public async Task<IActionResult> GetAllPredictions()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var predictions = await _suggestionService.GetAllPredictionsAsync(userId);
+                return Ok(predictions);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e.Message);
+            }
+        }
     }
 }

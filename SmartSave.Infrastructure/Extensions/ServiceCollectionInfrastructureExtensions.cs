@@ -26,7 +26,7 @@ namespace SmartSave.Infrastructure.Extensions
             {
                 services.AddDbContext<SmartSaveDbContext>(options =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("WilmeConnection"),
+                    options.UseSqlServer(configuration.GetConnectionString("KiaraConnection"),
                         m => m.MigrationsAssembly(typeof(SmartSaveDbContext).Assembly.FullName));
                 });
             }
