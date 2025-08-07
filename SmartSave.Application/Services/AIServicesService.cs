@@ -34,5 +34,25 @@ namespace SmartSave.Application.Services
 
             await _repository.SaveSuggestionAsync(suggestion);
         }
+
+        public async Task<List<GetSuggestionDto>> GetAllSuggestionsAsync(int userId)
+        {
+            var suggestions = await _repository.GetAllSuggestionsAsync(userId);
+
+            return suggestions.Select(s => new GetSuggestionDto
+            {
+                SuggestionMessage = s.SuggestionMessage
+            }).ToList();
+        }
+
+        public async Task<List<GetPredictionDto>> GetAllPredictionsAsync(int userId)
+        {
+            var predictions = await _repository.GetAllPredictionsAsync(userId);
+
+            return predictions.Select(p => new GetPredictionDto
+            {
+                PredictionMessage = p.PredictionMessage
+            }).ToList();
+        }
     }
 }
